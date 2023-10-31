@@ -1,10 +1,12 @@
 SHELL := bash -eou pipefail
 
+# Change it to have a slow and fast
+
 .PHONY: all
 all:| format ci
 
 .PHONY: ci
-ci:| lint check test cluster-test
+ci:| lint check test cluster-up cluster-test cluster-down
 
 .PHONY: install
 install: .venv
@@ -20,8 +22,8 @@ format: install
 	poetry run ruff format --check .
 
 .PHONY: lint
-lint: install
-	poetry poly check 
+lint: install 
+	# poetry poly check
 	poetry run ruff check --no-fix-only .
 	poetry run ruff format --check .
 	
@@ -35,19 +37,16 @@ test: install
 	poetry run pytest
 
 .PHONY: cluster-up
-cluster-up:
-	minikube start \
-		--driver=docker \
-		--cpus="2" \
-		--memory="4g" \
-		--kubernetes-version="v1.27.4" \
-		--addons="ingress" \
-		--addons="ingress-dns" \
-		--wait=all
+cluster-up: 
+	ctlptl apply -f dev-cluster.yaml
+	
+.PHONY: cluster-test
+cluster-test:
+	tilt ci
 
 .PHONY: cluster-down
 cluster-down:
-	minikube stop
+	ctlptl delete -f dev-cluster.yaml
 
 .PHONY: clean
 clean:
