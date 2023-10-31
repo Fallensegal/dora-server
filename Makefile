@@ -4,7 +4,7 @@ SHELL := bash -eou pipefail
 all:| format ci
 
 .PHONY: ci
-ci:| lint check test
+ci:| lint check test cluster-test
 
 .PHONY: install
 install: .venv
@@ -16,17 +16,15 @@ install: .venv
 .PHONY: format
 format: install
 	poetry poly sync
-	poetry run ruff --quiet --fix-only .
-	poetry run black --quiet .
-	poetry run toml-sort --check pyproject.toml \
-	|| poetry run toml-sort pyproject.toml
+	poetry run ruff check --fix-only .
+	poetry run ruff format --check .
 
 .PHONY: lint
 lint: install
-	poetry poly check --quiet
-	poetry run ruff --quiet --no-fix-only .
-	poetry run black --quiet --check .
-	poetry run toml-sort --check pyproject.toml
+	poetry poly check 
+	poetry run ruff check --no-fix-only .
+	poetry run ruff format --check .
+	
 
 .PHONY: check
 check: install
