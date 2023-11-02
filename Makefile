@@ -19,7 +19,7 @@ install: .venv
 format: install
 	poetry poly sync
 	poetry run ruff check --fix-only .
-	poetry run ruff format --check .
+	poetry run ruff format .
 
 .PHONY: lint
 lint: install 
