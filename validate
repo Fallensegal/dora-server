@@ -1,0 +1,5 @@
+#!/bin/bash
+
+.venv/bin/mypy .
+.venv/bin/ruff format --check .
+.venv/bin/ruff check --no-fix .
