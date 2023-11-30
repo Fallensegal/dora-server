@@ -13,7 +13,7 @@ def test_client() -> Generator[TestClient, None, None]:
 
 def test_user_submit_dora_metrics(test_client: TestClient) -> None:
     res = test_client.post("/metrics", json={
-        "user_id": 'b0098d7a-b10e-44af-b61d-3e87c69c197c',
+        "user_id": "b0098d7a-b10e-44af-b61d-3e87c69c197c",
         "metric_1": 1,
         "metric_2": 2,
         "metric_3": 3,
