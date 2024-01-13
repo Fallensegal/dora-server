@@ -1,5 +1,7 @@
-from pydantic import BaseModel
 from uuid import UUID
+
+from pydantic import BaseModel
+
 
 class DoraMetric(BaseModel):
     user_id: UUID
@@ -8,6 +10,7 @@ class DoraMetric(BaseModel):
     metric_3: int
     metric_4: int
     metric_5: int
+
 
 class DoraMetricList(BaseModel):
     data: list[DoraMetric]
