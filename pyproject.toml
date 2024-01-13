@@ -5,7 +5,7 @@ requires-python = ">=3.11"
 dependencies = ["fastapi", "uvicorn[standard]"]
 
 [project.optional-dependencies]
-dev = ["mypy", "ruff", "pytest", "httpx"]
+dev = ["mypy", "ruff", "pytest", "httpx", "Jinja2", "python-multipart"]
 
 [tool.mypy]
 strict = true
