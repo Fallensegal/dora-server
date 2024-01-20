@@ -1,0 +1,25 @@
+name: compile-check-and-lint
+
+on:
+  push:
+    paths:
+      - dora/**
+  pull_request:
+    paths:
+      - dora/**
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  compile_and_lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./dora
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: cargo clippy -- -Dwarnings
+      - run: cargo check --verbose
+      - run: cargo test --verbose
